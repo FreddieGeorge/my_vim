@@ -51,7 +51,7 @@ endif
 "set smartcase		" Do smart case matching
 "set incsearch		" Incremental search
 "set autowrite		" Automatically save before commands like :next and :make
-"set hidden		" Hide buffers when they are abandoned
+"set hidden		    " Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
 
 " Source a global configuration file if available
@@ -65,50 +65,43 @@ set nocompatible
 " open highlight
 syntax on
 " ==================== vim 原生设置 ====================
-set showcmd
+set showcmd         " 显示指令
+set showmode        " 显示当前模式
 
-set showmode
+set encoding=utf-8  " 设置编码格式
+set t_Co=256        " 编码
 
-set encoding=utf-8
+set laststatus=2    " 状态栏
+set number          " 显示行号
+set showmatch       " 显示括号匹配
+set hlsearch        " 高亮搜索结果
+set ruler           " 显示光标当前位置
 
-set t_Co=256
+set tabstop=4       " tab长度
+set autoindent      " 继承前一行的缩进方式
+set shiftwidth=4    " 设置自动缩进长度
+set expandtab       " 空格替换tab
+set softtabstop=4   " 退格键一次删除4个空格
 
-set tabstop=4
-set autoindent
-set shiftwidth=4
-set expandtab
-set softtabstop=4
 
-" preference
-set number
-
-" search
-set showmatch
-set hlsearch
-
-colorscheme pablo
+" 启用鼠标
+set mouse=a
+set selection=exclusive
+set selectmode=mouse,key
 
 " 设置上下滚动保留行数为5
 set scrolloff=5
-
-" 显示状态栏
-set laststatus=2
-
 " 禁止创建交换文件
 set noswapfile
 
 " 设置自动切换目录
 set autochdir
 
-" 显示光标位置
-set ruler
-
 " true color
 set termguicolors
 
 " ====================== vundle 设置开始 ================
 " 必须设置
-set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -121,24 +114,25 @@ Plugin 'scrooloose/nerdtree'                " 目录树
 Plugin 'vim-airline/vim-airline'            " 状态栏优化
 Plugin 'Valloric/YouCompleteMe'             " code completion
 Plugin 'majutsushi/tagbar'                  " 侧边结构
+Plugin 'junegunn/goyo.vim'                  " goyo模式显示
+Plugin 'preservim/nerdcommenter'            " 注释插件
+
 
 call vundle#end()
-
-
-
 
 " =========== solarized ==========
 let g:solarized_termtrans = 1 " use terminal background
 let g:solarized_visibility = "high"
 
+" gui下为light，其他是dark
 if has('gui_running')
     set background=light
 else
     set background=dark
 endif
 
+" 主题设置为solarized
 colorscheme solarized
-
 
 " ============ nerdtree ============
 " Start NERDTree and put the cursor back in the other window.
@@ -151,16 +145,16 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
+" F2 打开NERDTree
 map <F2> :NERDTreeToggle<CR>
 let NERDTreeWinSize=30
-let NERDTreeWinPos="right"
+let NERDTreeWinPos="left"
 
 "============= vim-airline ============
 let g:airline_powerline_fonts=1
-
+let g:airline_theme='moloai'
 
 filetype plugin indent on
-
 
 "============= YouCompleteMe ============
 
@@ -181,13 +175,43 @@ let g:ycm_use_ultisnips_completer = 0 " 不查询 ultisnips 提供的代码模�
 let g:ycm_show_diagnostics_ui = 0 " 禁用语法检查
 let g:ycm_key_list_select_completion = ['<Down>'] " 选择下一条补全，Default: ['<TAB>', '<Down>']
  
-let g:ycm_key_list_previous_completion = ['<Up>'] " 选择上一条补全，Default: ['<S-TAB>', '<Up>']
+let g:ycm_key_list_previous_completion = ['<Up>'] " 选择上一条补全，Default: ['<S-TAB>', '<Up]
 let g:ycm_key_list_stop_completion = ['<Enter>'] " 中止此次补全，Default: ['<C-y>']
-
-
 
 "============= tagbar =============
 let g:tagbar_width=35
 let g:tagbar_autofocus=1
-let g:tagbar_left=1
-nmap <F3> :TagbarToggle<CR>
+let g:tagbar_left=1 " tagbar放在窗口左边
+" tagbar启动绑定到F3
+nmap <F3> :TagbarToggle<CR>  
+
+"============= goyo ===============
+let g:goyo_height=100 " 暂时未解决黑边问题
+
+"============ NERDCommenter ======
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
