@@ -69,7 +69,6 @@ set showcmd         " 显示指令
 set showmode        " 显示当前模式
 
 set encoding=utf-8  " 设置编码格式
-set t_Co=256        " 编码
 
 set laststatus=2    " 状态栏
 set number          " 显示行号
@@ -112,6 +111,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'   " 主题
 Plugin 'scrooloose/nerdtree'                " 目录树
 Plugin 'vim-airline/vim-airline'            " 状态栏优化
+Plugin 'vim-airline/vim-airline-themes'      " 状态栏主题
 Plugin 'Valloric/YouCompleteMe'             " code completion
 Plugin 'majutsushi/tagbar'                  " 侧边结构
 Plugin 'junegunn/goyo.vim'                  " goyo模式显示
@@ -120,6 +120,7 @@ Plugin 'preservim/nerdcommenter'            " 注释插件
 
 call vundle#end()
 
+filetype plugin indent on
 " =========== solarized ==========
 let g:solarized_termtrans = 1 " use terminal background
 let g:solarized_visibility = "high"
@@ -152,9 +153,7 @@ let NERDTreeWinPos="left"
 
 "============= vim-airline ============
 let g:airline_powerline_fonts=1
-let g:airline_theme='moloai'
-
-filetype plugin indent on
+let g:airline_theme='minimalist'
 
 "============= YouCompleteMe ============
 
